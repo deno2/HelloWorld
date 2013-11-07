@@ -16,31 +16,34 @@ import backtype.storm.utils.Utils;
 
 /**
  * @author dene
- *
+ * 
  */
 public class HelloWorldSpout extends BaseRichSpout {
-	
+
 	private SpoutOutputCollector collector;
 	private int referenceRandom;
 	private static final int MAX_RANDOM = 10;
-	
-	public HelloWorldSpout () {
+
+	public HelloWorldSpout() {
 		final Random rand = new Random();
 		referenceRandom = rand.nextInt(MAX_RANDOM);
 	}
-	
-	
 
-	/* (non-Javadoc)
-	 * @see backtype.storm.spout.ISpout#open(java.util.Map, backtype.storm.task.TopologyContext, backtype.storm.spout.SpoutOutputCollector)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see backtype.storm.spout.ISpout#open(java.util.Map,
+	 * backtype.storm.task.TopologyContext,
+	 * backtype.storm.spout.SpoutOutputCollector)
 	 */
 	@Override
-	public void open(Map conf, TopologyContext context,	SpoutOutputCollector collector) {
+	public void open(Map conf, TopologyContext context,
+			SpoutOutputCollector collector) {
 		Utils.sleep(100);
 		final Random rand = new Random();
 		int instanceRandom = rand.nextInt(MAX_RANDOM);
-		
-		if(instanceRandom == referenceRandom) {
+
+		if (instanceRandom == referenceRandom) {
 			collector.emit(new Values("Hello World"));
 		} else {
 			collector.emit(new Values("Other Random Word"));
@@ -48,7 +51,9 @@ public class HelloWorldSpout extends BaseRichSpout {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see backtype.storm.spout.ISpout#nextTuple()
 	 */
 	@Override
@@ -57,8 +62,12 @@ public class HelloWorldSpout extends BaseRichSpout {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see backtype.storm.topology.IComponent#declareOutputFields(backtype.storm.topology.OutputFieldsDeclarer)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * backtype.storm.topology.IComponent#declareOutputFields(backtype.storm
+	 * .topology.OutputFieldsDeclarer)
 	 */
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {

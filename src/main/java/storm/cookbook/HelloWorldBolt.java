@@ -11,7 +11,7 @@ import backtype.storm.tuple.Tuple;
 public class HelloWorldBolt extends BaseRichBolt {
 
 	private int myCount = 0;
-	
+
 	@Override
 	public void prepare(Map stormConf, TopologyContext context,
 			OutputCollector collector) {
@@ -23,9 +23,15 @@ public class HelloWorldBolt extends BaseRichBolt {
 	public void execute(Tuple input) {
 		String test = input.getStringByField("sentence");
 		
-		if(("Hello World").equals(test)){
+		System.out.println("sentence:" + test);
+
+		if (("Hello World").equals(test)) {
 			myCount++;
-			System.out.println("Found a Hello World! My count is now: " + Integer.toString(myCount));
+			System.out.println("Found a Hello World! My count is now: "
+					+ Integer.toString(myCount));
+		} else {
+			System.out.println("NOT FOUND Hello World. My count is now: "
+					+ Integer.toString(myCount));
 		}
 
 	}

@@ -12,11 +12,13 @@ public class HelloWorldTopology {
 
 	/**
 	 * @param args
+	 *            mvn compile exec:java Dexec.classpathScope=compile
+	 *            Dexec.mainClass=storm.cookbook.HelloWorldTopology
 	 */
 	public static void main(String[] args) {
 		TopologyBuilder builder = new TopologyBuilder();
-		builder.setSpout("randomHelloWorld", new HelloWorldSpout(), 1);
-		builder.setBolt("HelloWorldBolt", new HelloWorldBolt(), 2).shuffleGrouping("randomHelloWorld");
+		builder.setSpout("randomHelloWorld", new HelloWorldSpout(), 100);
+		builder.setBolt("HelloWorldBolt", new HelloWorldBolt(), 3).shuffleGrouping("randomHelloWorld");
 		
 		Config conf = new Config();
 		conf.setDebug(true);
@@ -33,10 +35,11 @@ public class HelloWorldTopology {
 			}
 			
 		}else{
+			System.out.println("Note: Launching Local Cluster Man!");
 			LocalCluster cluster = new LocalCluster();
 			cluster.submitTopology("test", conf, builder.createTopology());
 			
-			Utils.sleep(10000);
+			Utils.sleep(30000);
 			cluster.killTopology("test");
 			cluster.shutdown();
 		}
