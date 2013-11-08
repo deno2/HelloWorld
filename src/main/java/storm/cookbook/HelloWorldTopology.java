@@ -12,8 +12,7 @@ public class HelloWorldTopology {
 
 	/**
 	 * @param args
-	 *            mvn compile exec:java Dexec.classpathScope=compile
-	 *            Dexec.mainClass=storm.cookbook.HelloWorldTopology
+	 * mvn compile exec:java -Dexec.classpathScope=compile -Dexec.mainClass=storm.cookbook.HelloWorldTopology
 	 */
 	public static void main(String[] args) {
 		TopologyBuilder builder = new TopologyBuilder();
@@ -21,7 +20,7 @@ public class HelloWorldTopology {
 		builder.setBolt("HelloWorldBolt", new HelloWorldBolt(), 3).shuffleGrouping("randomHelloWorld");
 		
 		Config conf = new Config();
-		conf.setDebug(true);
+		conf.setDebug(false);
 		
 		if(args != null && args.length > 0){
 			conf.setNumWorkers(3);
