@@ -20,7 +20,7 @@ public class HelloWorldTopology {
 		builder.setBolt("HelloWorldBolt", new HelloWorldBolt(), 3).shuffleGrouping("randomHelloWorld");
 		
 		Config conf = new Config();
-		conf.setDebug(false);
+		conf.setDebug(true);
 		
 		if(args != null && args.length > 0){
 			conf.setNumWorkers(3);
